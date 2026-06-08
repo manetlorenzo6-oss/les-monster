@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Monster</title>
+    <style>
+        /* LA CORRECTION COMPLÈTE DU FOND : Un dégradé sombre ultra stylé */
+        body {
+            background: linear-gradient(135deg, #111412 0%, #1a1f1c 50%, #111412 100%);
+            background-attachment: fixed;
+            font-family: sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* Titre adapté pour le fond sombre : Blanc pur avec une lueur néon verte discrète */
+        h1 {
+            text-align: center;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(82, 255, 70, 0.4);
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        /* Grille automatique propre qui gère l'affichage sans décaler */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px; 
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Bloc blanc autour de chaque canette (avec ombre renforcée pour le relief) */
+        .can-card {
+            background-color: white;
+            border-radius: 40px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .can-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(82, 255, 70, 0.25); /* Lueur verte au survol */
+        }
+
+        /* Ajustement des images */
+        .canette-img {
+            max-width: 100%;
+            height: 220px;
+            object-fit: contain;
+        }
+
+        /* --- SYSTÈME DE POP-UP (MODALE) --- */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); 
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            position: relative;
+            text-align: left;
+            line-height: 1.6;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>les monster</h1>
+
+    <div class="gallery">
+        
+        <!-- 1. MONSTER ORIGINAL -->
+        <div class="can-card" onclick="openModal('Monster Original (2002)', 'Look noir mat et griffures vertes. Le liquide à l\'intérieur est de couleur ambrée. Elle offre un goût très sucré et acidulé qui rappelle la pomme verte et le bonbon, combiné à un fort boost de caféine et de taurine.')">
+            <img class="canette-img" src="pour site.webp" alt="Monster Original">
+        </div>
+
+        <!-- 2. MONSTER ASSAULT -->
+        <div class="can-card" onclick="openModal('Monster Assault (2004)', 'Design avec un motif camouflage militaire et griffures rouges. Cette version propose une saveur unique et bien prononcée de cola cerise (type Cherry Coke / Dr Pepper). Le liquide est de couleur sombre, identique à un cola.')">
+            <img class="canette-img" src="monster-energy-drink-effort_2.webp" alt="Monster Assault">
+        </div>
+
+        <!-- 3. MONSTER ULTRA PEACHY KEEN -->
+        <div class="can-card" onclick="openModal('Ultra Peachy Keen (2022)', 'Une magnifique canette orange pastel texturée style rétro. Elle délivre un goût intense, doux et super rafraîchissant de pêche blanche juteuse. Le tout avec zéro calorie et sans aucun sucre.')">
+            <img class="canette-img" src="images.jpg" alt="Monster Peachy Keen">
+        </div>
+
+        <!-- 4. MONSTER VIKING BERRY -->
+        <div class="can-card" onclick="openModal('Juice Viking Berry', 'Une édition spéciale arborant de superbes illustrations de la mythologie nordique. Conçue avec du vrai jus de fruits, elle propose un profil aromatique très riche centré sur les baies sauvages, la mûre et la framboise.')">
+            <img class="canette-img" src="B971A72C-6B7C-4959-8EA7-F40C4D2C08ED.webp" alt="Monster Viking Berry">
+        </div>
+
+        <!-- 5. MONSTER REHAB CITRON -->
+        <div class="can-card" onclick="openModal('Rehab Thé + Citron', 'Canette au look jaune et noir. Particularité importante : c\'est une boisson plate (non gazeuse) et peu sucrée. Il s\'agit d\'un mélange ultra désaltérant à base de vrai thé noir et de limonade au citron.')">
+            <img class="canette-img" src="monster-rehab-the-citron-boite-50cl.webp" alt="Monster Rehab Citron">
+        </div>
+
+        <!-- 6. MONSTER PACIFIC PUNCH -->
+        <div class="can-card" onclick="openModal('Juice Pacific Punch (2018)', 'Décorée avec des graphismes style tatouages marins à l\'ancienne. C\'est un véritable punch aux fruits exotiques très fruité qui mélange des saveurs de pomme, orange, framboise, cerise, ananas et fruit de la passion.')">
+            <img class="canette-img" src="monster-energy-ultra-paradise-500-ml.jpg" alt="Monster Pacific Punch">
+        </div>
+
+        <!-- 7. MONSTER ULTRA BLUE HAWAIIAN -->
+        <div class="can-card" onclick="openModal('Ultra Blue Hawaiian', 'Canette d\'un bleu lagon estival. Cette version sans sucre propose un profil aromatique très rafraîchissant et tropical, mélangeant subtilement des notes d\'ananas, de noix de coco et d\'agrumes.')">
+            <img class="canette-img" src="Candymix_MonsterUltraBlueHawaiian_grande.webp" alt="Monster Ultra Blue Hawaiian">
+        </div>
+
+        <!-- 8. JUICE MONSTER MANGO LOCO -->
+        <div class="can-card" onclick="openModal('Juice Monster Mango Loco (2017)', 'Inspirée de la fête des morts mexicaine (Dia de los Muertos). C\'est un mélange de jus de fruits exotiques avec une dominante de mangue mûre ultra juteuse. Sucrée, douce et fruitée, la couleur de la boisson est orange vif.')">
+            <img class="canette-img" src="5F3C0257-30CB-4F84-84D8-4F5BD29CD477.webp" alt="Monster Mango Loco">
+        </div>
+
+        <!-- 9. MONSTER LEWIS HAMILTON ZERO SUGAR -->
+        <div class="can-card" onclick="openModal('Monster Lewis Hamilton Zero Sugar (2023)', 'Créée en collab avec le champion de F1 Lewis Hamilton. Le design a été réalisé par un artiste digital. Sans sucre, elle possède un goût très frais et unique qui rappelle la pêche et la nectarine.')">
+            <img class="canette-img" src="monster-energy-lewis-hamilton.webp" alt="Monster Lewis Hamilton">
+        </div>
+
+        <!-- 10. MONSTER SANS SUCRE (ABSOLUTELY ZERO) -->
+        <div class="can-card" onclick="openModal('Monster Green Zero Sugar', 'La version sans sucre de la Monster Original classique. On retrouve la canette noire mais cette fois les écritures et les contours des griffures sont bleus/verts. Elle imite fidèlement le goût acidulé de l\'originale mais sans calories.')">
+            <img class="canette-img" src="monster-sans-sucre_6.webp" alt="Monster Sans Sucre">
+        </div>
+
+        <!-- 11. MONSTER ULTRA GOLD -->
+        <div class="can-card" onclick="openModal('Monster Ultra Gold (2021)', 'Une canette dorée texturée magnifique. Cette version de la gamme Ultra offre un goût rafraîchissant et fruité d\'ananas mûr et bien juteux. Elle est totalement sans sucre.')">
+            <img class="canette-img" src="monster-energy-ultra-gold-zero.jpg" alt="Monster Ultra Gold">
+        </div>
+
+        <!-- 12. MONSTER PIPELINE PUNCH -->
+        <div class="can-card" onclick="openModal('Juice Pipeline Punch (2015)', 'Créée en hommage aux vagues mythiques de Banzai Pipeline à Hawaï. La canette est d\'un beau rose corail. Elle propose un goût délicieux de passion, orange et goyave (le fameux mix POG hawaïen) avec du vrai jus de fruit.')">
+            <img class="canette-img" src="images.jpeg-5_21fac286-ea3c-43ee-af84-6e55aec2fef4.webp" alt="Monster Pipeline Punch">
+        </div>
+
+        <!-- 13. MONSTER ULTRA ROSÁ -->
+        <div class="can-card" onclick="openModal('Monster Ultra Rosá (2020)', 'Une canette rose texturée au design floral moderne. C\'est une boisson légère et sans sucre avec un goût floral, fruité et légèrement boisé, agrémenté d\'une note finale d\'agrumes et de baies.')">
+            <img class="canette-img" src="Monster-Energy-Ultra-Rosa-Blik-Zero-Sugar-12x-0.5-liter-1-1_png.webp" alt="Monster Ultra Rosá">
+        </div>
+
+        <!-- 14. JUICE MONSTER RIO PUNCH -->
+        <div class="can-card" onclick="openModal('Juice Monster Rio Punch (2024)', 'Inspirée par l\'ambiance du carnaval de Rio au Brésil. Le design is très coloré. C\'est un mélange de fruits exotiques avec une touche originale de bonbon acidulé et d\'épices légères. Le liquide est d\'une couleur rosée.')">
+            <img class="canette-img" src="monster-energy-juice-rio-punch-473ml-236223_1000x.webp" alt="Monster Rio Punch">
+        </div>
+
+        <!-- 15. JAVA MONSTER LOCA MOCA -->
+        <div class="can-card" onclick="openModal('Java Monster Loca Moca (2007)', 'Une version importée très spéciale ! C\'est un mélange de café de qualité supérieure et de lait de vache, sublimé par un goût gourmand de chocolat moka. Non gazeuse, elle se boit bien fraîche, comme un café glacé au chocolat.')">
+            <img class="canette-img" src="monster-java-loca-moca.jpg" alt="Java Monster Loca Moca">
+        </div>
+
+    </div>
+
+    <!-- STRUCTURE DE LA FENÊTRE POP-UP -->
+    <div id="infoModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="margin-top: 0; color: #111;">Titre</h2>
+            <p id="modalText" style="color: #444; font-size: 15px; margin-bottom: 0;">Description...</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+
+        function openModal(title, text) {
+            modalTitle.innerHTML = title;
+            modalText.innerHTML = text;  
+            modal.classList.add('open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+
+</body>
+</html>
